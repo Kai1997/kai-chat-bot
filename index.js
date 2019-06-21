@@ -34,7 +34,7 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
       if (message.message) {
         var text = message.message.text;
         if (text=="hello" || text == "hi") {
-          sendMessage(senderId, "Hello ");
+          sendMessage(senderId, "Hello Chin");
         } 
         if (text=="lịch làm việc" || text=="lịch " || text=="lịch tuần" || text=="lịch trong tuần " ) {
             sendMessage(senderId, "Thứ 3 : Lau sàn ,nấu ăn chiều; Thứ 4: Tưới nước , đi chợ ,nấu ăn; Thứ 5 : lau sàn ;Thứ 6 : nấu ăn");
@@ -45,6 +45,12 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
         if (text=="người yêu" || text == "ny tôi là ai") {
           sendMessage(senderId, "kai nè <3 ");
         } 
+         if (text=="kai là ai" || text == "kai") {
+          sendMessage(senderId, "ny của Chin iu ");
+        } 
+         if (text=="tên tôi là gì" || text == "tên của tôi") {
+          sendMessage(senderId, "Chin cute hột me. ");
+        }
 
       }
     }
