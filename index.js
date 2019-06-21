@@ -51,6 +51,18 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
          if (text=="tên tôi là gì" || text == "tên của tôi") {
           sendMessage(senderId, "Chin cute hột me. ");
         }
+        if (text=="thứ 3" || text == "thứ 3 làm gì") {
+          sendMessage(senderId, "Lau sàn ,nấu ăn chiều");
+        } 
+        if (text=="thứ 4" || text == "thứ 4 làm gì") {
+          sendMessage(senderId, "Tưới nước , đi chợ ,nấu ăn");
+        }
+        if (text=="thứ 5" || text == "thứ 5 làm gì") {
+          sendMessage(senderId, "Lau sàn ");
+        }
+        if (text=="thứ 6" || text == "thứ 6 làm gì") {
+          sendMessage(senderId, "nấu ăn ");
+        }
 
       }
     }
