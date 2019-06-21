@@ -32,12 +32,19 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
     for (var message of messaging) {
       var senderId = message.sender.id;
       if (message.message) {
-        if (message.message.text=="hello") {
-          sendMessage(senderId, "Hello!! ");
+        var text = message.message.text;
+        if (text=="hello" || text == "hi") {
+          sendMessage(senderId, "Hello ");
         } 
-        if (message.message.text=="lịch học") {
-            sendMessage(senderId, "Học cả ngày ");
-          }
+        if (text=="lịch làm việc" || text=="lịch " || text=="lịch tuần" || text=="lịch trong tuần " ) {
+            sendMessage(senderId, "Thứ 3 : Lau sàn ,nấu ăn chiều; Thứ 4: Tưới nước , đi chợ ,nấu ăn; Thứ 5 : lau sàn ;Thứ 6 : nấu ăn");
+        }
+        if (text=="học" || text == "lịch học" || text == "lịch học tiếng nhật" || text == "học tiếng nhật" ) {
+          sendMessage(senderId, "Tối các thứ trong tuần vào lúc 7h tối. Thứ 2 học từ vựng. Thứ 3 học ngữ pháp . Thứ 4 làm bài. Thứ 5 học từ vựng .Thứ 6 học ngữ pháp. Thứ 7  làm bài ");
+        } 
+        if (text=="người yêu" || text == "ny tôi là ai") {
+          sendMessage(senderId, "kai nè <3 ");
+        } 
 
       }
     }
@@ -45,7 +52,6 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
   res.status(200).send("OK");
 });
 
-// Đây là function dùng api của facebook để gửi tin nhắn
 function sendMessage(senderId, message) {
   request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
