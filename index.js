@@ -56,9 +56,9 @@ app.post('/webhook', async function(req, res) { // Phần sử lý tin nhắn c�
 		}
 
 		let responses = await sessionClient.detectIntent(request)	
-		let mss = responses[0].queryResult.fulfillmentMessages[0].text.text[0];
-		sendMessage(senderId, mss);
 		sendMessage(senderId, "ấsd");
+		let mss = responses[0].queryResult.fulfillmentMessages[0].text.text[0];
+		
       }
     }
   }
