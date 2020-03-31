@@ -37,7 +37,7 @@ app.get('/webhook', function(req, res) { // Đây là path để validate tooken
 
 app.post('/webhook', async function(req, res) { // Phần sử lý tin nhắn của người dùng gửi đến
   var entries = req.body.entry;
-  // const sessionPath = sessionClient.sessionPath(projectId, "12123");
+  const sessionPath = sessionClient.sessionPath(projectId, "12123");
 
   for (var entry of entries) {
     var messaging = entry.messaging;
@@ -45,16 +45,17 @@ app.post('/webhook', async function(req, res) { // Phần sử lý tin nhắn c�
       var senderId = message.sender.id;
       if (message.message) {
         var text = message.message.text;
+        const request = {
+			session: sessionPath,
+			queryInput: {
+				text: {
+					text: text,
+					languageCode: LANGUAGE_CODE
+				}
+			}
+		}
         sendMessage(senderId, text);
-  //       const request = {
-		// 	session: sessionPath,
-		// 	queryInput: {
-		// 		text: {
-		// 			text: text,
-		// 			languageCode: LANGUAGE_CODE
-		// 		}
-		// 	}
-		// }
+		
 	// let responses = await sessionClient.detectIntent(request)	
 	// let mss = responses[0].queryResult.fulfillmentMessages[0].text.text[0];
 	// sendMessage(senderId, mss);
