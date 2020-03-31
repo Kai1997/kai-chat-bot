@@ -9,13 +9,13 @@ const LANGUAGE_CODE = 'en-US';
 var http = require('http');
 var bodyParser = require('body-parser');
 var express = require('express');
-// const config = {
-// 			credentials: {
-// 				private_key: private_key,
-// 				client_email: client_email
-// 			}
-// 		}
-// let sessionClient = new dialogflow.SessionsClient(config);
+const config = {
+			credentials: {
+				private_key: private_key,
+				client_email: client_email
+			}
+		}
+const sessionClient = new dialogflow.SessionsClient(config);
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
