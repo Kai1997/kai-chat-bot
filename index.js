@@ -1,11 +1,21 @@
 const APP_SECRET = '2a944ab7f2a57e7f5cc96df47c209e3b';
 const VALIDATION_TOKEN = '123123123';
 const PAGE_ACCESS_TOKEN = 'EAAMfa7fNnRcBAIdq22JyJ5CeCowgISqx8lYT8jLqGmi0ZADb6AVu2f9ORnzlToZAWZBlwzuVGE86LtxQ51dzJDVtSfUBD5i3rfiJOh7W2zS2gAqeKv1epWqAaxxwafbLR9KEWEH7tdNUdDyA14Up0ZBj44kl4QLrc9RJkbpAgZCyryup6gDE2';
-
+const private_key = "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDAGx/uoTjszG6E\nHsibQ6ZvQRXJm8M1vMIRMPPX04obpgnLKckFjwY40+n0z+wpZTRAsAUHhF2TaTSC\ncJGJIm8JTqvVLgHz1Zl3C7+a4yLmAEd22KwJe1EQJDM4SkaSn0UxndDX/JevnmML\n9VVV5hgAHuG7p/fEOIiI9jJDA/PloQIFxQJ6RUUaI/fm3eu0wyDHK0Sc5/cAlZlN\nQbtz85JATRp9/iv3DObt7LEyN98kRXm8xFBRfuOsLqIBrDUs/U9ODkIFr85c5Jac\nFsHD28eImOXG+VGlB2fiem3ZxGVyNbCWREY3iveojVkznWTmAHATrR9VHUp9iXaW\n33DeFqnxAgMBAAECggEAG3HUmEgepI/ZKxVlxe6+gI7tEKoo04zFseSLNZaCWMxa\nAlUUI6/o7OXzetbYj5pmgmZTNZ12q+hgCNGRrSSG9e6wFErYGxB1NgFu7G8OLYs1\nKniubUVZkaOGUMClv+0ymrHH5A9xUTTgxBTWzeiLHbtLtv46YqVL9jsr95CBP9kG\ntIbivPY2hTe4tPZNh0WW4vuneaeQ9egqc4HTP5AbwiBEY0vQDmj632D4/jOkxKaw\nrvnPGg+5zKVBmAiNkA9/ywsZDmOSQdJ/ked15JwtQOh4apUUeToeJSfIhj6QLB7R\n6McIIkoqVhJsPtbjqoQyy4S4Sj7w8QxcjDTqsuQZ1QKBgQD4mQUFrCLNWiedMBjj\nqBOnUaAA74uX3KykIDJ6yJm7U9uQDjQ2lRdAyqjffQsURV9rGtWp83IPmhamQ0q/\nRmHAJ2e8uRCBAzN1k+YJ0u/jc1w/LMpC3CbY63XSUIuTLTEilD/z0jzLAPagZGd2\nZY4xNAvrXPvsUJUm6jANqho2hQKBgQDF03yMDmI+kLKC7flDM+lm3UXpWZilEbXN\n0Zk6oTX4oV/Q0HPTwlOr9y32Yf0kb7LCsPwC54hKOj6Vk+Z4yga9EIUQhvJrRc6X\n6Z0kvAvS4dx8TVoPGPlnC1zZqD1Qi6E2T7K/jStStzG13qmKvt9mztrP1CQ0082S\nPpzImctPfQKBgQC0wW5pZXQYpEjRfjtarMc9jZgtlf+F+Cp/W/nYVSuSjbLD19AX\nL+isb67CcYUwxBBRLD3XSO/ScFOvqJYc5ewFb6F6E4XwiIdOIq/MzNcoJqUYOlUG\nsFR+vRX6Sh5ycRWc8vZdLqyNXrH0hYzFBaqSFCnmhMGYXi9VEErIZLqSkQKBgQCr\nN7nqNmDNqcr3CyTcB0gRoZ3qs4MsC0IBG1G1ruXZhUI6ptA5DU4B3nPHdVP1fz+G\nxku379DD/dlA+LtW+/QNGwkwHrweIFMIpEdADgllwdplM0WpH4Jsrybzs2suFUu4\niA47P+GpO6koscinr0AH6Sz1B7U2i8K2ur5T2NhguQKBgGSOP23IrbMG7EvcVYnA\nsRnRY+Qj1ILvyRa3JjN7eEMTY3dXf5UrJor4ZB7bkaH8Wuz7APUaBI0XWsKojCs/\nykPgCDTNr6fTOFb20JhDfSfx0LZmLregrY21zayzArX+NyMvEIR95UNF7tGZOJ4Q\nRK7H56SpQHnlH2f0KInM74Ii\n-----END PRIVATE KEY-----\n";
+const client_email= "chatbot@onlineeatsbot-okuooi.iam.gserviceaccount.com";
+const project_id= "onlineeatsbot-okuooi";
+const dialogflow = require('dialogflow');
+const LANGUAGE_CODE = 'en-US';
 var http = require('http');
 var bodyParser = require('body-parser');
 var express = require('express');
-
+const config = {
+			credentials: {
+				private_key: private_key,
+				client_email: client_email
+			}
+		}
+let sessionClient = new dialogflow.SessionsClient(config);
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
@@ -25,45 +35,28 @@ app.get('/webhook', function(req, res) { // Đây là path để validate tooken
   res.send('Error, wrong validation token');
 });
 
-app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của người dùng gửi đến
+app.post('/webhook', async function(req, res) { // Phần sử lý tin nhắn của người dùng gửi đến
   var entries = req.body.entry;
+  const sessionPath = sessionClient.sessionPath(projectId, "12123");
+
   for (var entry of entries) {
     var messaging = entry.messaging;
     for (var message of messaging) {
       var senderId = message.sender.id;
       if (message.message) {
         var text = message.message.text;
-        if (text=="hello" || text == "hi") {
-          sendMessage(senderId, "Hello Chin");
-        } 
-        if (text=="lịch làm việc" || text=="lịch " || text=="lịch tuần" || text=="lịch trong tuần " ) {
-            sendMessage(senderId, "Thứ 3 : Lau sàn ,nấu ăn chiều; Thứ 4: Tưới nước , đi chợ ,nấu ăn; Thứ 5 : lau sàn ;Thứ 6 : nấu ăn");
-        }
-        if (text=="học" || text == "lịch học" || text == "lịch học tiếng nhật" || text == "học tiếng nhật" ) {
-          sendMessage(senderId, "Tối các thứ trong tuần vào lúc 7h tối. Thứ 2 học từ vựng. Thứ 3 học ngữ pháp . Thứ 4 làm bài. Thứ 5 học từ vựng .Thứ 6 học ngữ pháp. Thứ 7  làm bài ");
-        } 
-        if (text=="người yêu" || text == "ny tôi là ai") {
-          sendMessage(senderId, "kai nè <3 ");
-        } 
-         if (text=="kai là ai" || text == "kai") {
-          sendMessage(senderId, "ny của Chin iu ");
-        } 
-         if (text=="tên tôi là gì" || text == "tên của tôi") {
-          sendMessage(senderId, "Chin cute hột me. ");
-        }
-        if (text=="thứ 3" || text == "thứ 3 làm gì") {
-          sendMessage(senderId, "Lau sàn ,nấu ăn chiều");
-        } 
-        if (text=="thứ 4" || text == "thứ 4 làm gì") {
-          sendMessage(senderId, "Tưới nước , đi chợ ,nấu ăn");
-        }
-        if (text=="thứ 5" || text == "thứ 5 làm gì") {
-          sendMessage(senderId, "Lau sàn ");
-        }
-        if (text=="thứ 6" || text == "thứ 6 làm gì") {
-          sendMessage(senderId, "nấu ăn ");
-        }
-
+        const request = {
+			session: sessionPath,
+			queryInput: {
+				text: {
+					text: text,
+					languageCode: LANGUAGE_CODE
+				}
+			}
+		}
+	let responses = await this.sessionClient.detectIntent(request)	
+	let mss = responses[0].queryResult.fulfillmentMessages[0].text.text[0];
+	sendMessage(senderId, mss);
       }
     }
   }
