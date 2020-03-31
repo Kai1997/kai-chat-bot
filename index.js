@@ -37,7 +37,7 @@ app.get('/webhook', function(req, res) { // Đây là path để validate tooken
 
 app.post('/webhook', async function(req, res) { // Phần sử lý tin nhắn của người dùng gửi đến
   var entries = req.body.entry;
-  const sessionPath = sessionClient.sessionPath(projectId, "12123");
+  const sessionPath = sessionClient.sessionPath(project_id, "12123");
 
   for (var entry of entries) {
     var messaging = entry.messaging;
