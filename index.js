@@ -9,13 +9,13 @@ const LANGUAGE_CODE = 'en-US';
 var http = require('http');
 var bodyParser = require('body-parser');
 var express = require('express');
-const config = {
-			credentials: {
-				private_key: private_key,
-				client_email: client_email
-			}
-		}
-let sessionClient = new dialogflow.SessionsClient(config);
+// const config = {
+// 			credentials: {
+// 				private_key: private_key,
+// 				client_email: client_email
+// 			}
+// 		}
+// let sessionClient = new dialogflow.SessionsClient(config);
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
@@ -37,7 +37,7 @@ app.get('/webhook', function(req, res) { // Đây là path để validate tooken
 
 app.post('/webhook', async function(req, res) { // Phần sử lý tin nhắn của người dùng gửi đến
   var entries = req.body.entry;
-  const sessionPath = sessionClient.sessionPath(projectId, "12123");
+  // const sessionPath = sessionClient.sessionPath(projectId, "12123");
 
   for (var entry of entries) {
     var messaging = entry.messaging;
@@ -45,7 +45,7 @@ app.post('/webhook', async function(req, res) { // Phần sử lý tin nhắn c�
       var senderId = message.sender.id;
       if (message.message) {
         var text = message.message.text;
-        sendMessage(senderId, sessionPath);
+        sendMessage(senderId, text);
   //       const request = {
 		// 	session: sessionPath,
 		// 	queryInput: {
