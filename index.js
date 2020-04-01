@@ -6,7 +6,6 @@ const client_email= "chatbot@onlineeatsbot-okuooi.iam.gserviceaccount.com";
 const project_id= "onlineeatsbot-okuooi";
 const dialogflow = require('dialogflow');
 const LANGUAGE_CODE = 'en-US';
-
 var http = require('http');
 var bodyParser = require('body-parser');
 var express = require('express');
@@ -46,20 +45,19 @@ app.post('/webhook', async function(req, res) { // Phần sử lý tin nhắn c�
       var senderId = message.sender.id;
       if (message.message) {
         var text = message.message.text;
-        sendMessage(senderId, text);
-        // const request = {
-        //   session: sessionPath,
-        //   queryInput: {
-        //     text: {
-        //       text: text,
-        //       languageCode: LANGUAGE_CODE
-        //     }
-        //   }
-        // }
+        const request = {
+			session: sessionPath,
+			queryInput: {
+				text: {
+					text: text,
+					languageCode: LANGUAGE_CODE
+				}
+			}
+		}
 
-		// let responses = await sessionClient.detectIntent(request)	
-		// let mss = responses[0].queryResult.fulfillmentMessages[0].text.text[0];
-		  
+		let responses = await sessionClient.detectIntent(request)	
+		let mss = responses[0].queryResult.fulfillmentMessages[0].text.text[0];
+		sendMessage(senderId, mss);
 		
       }
     }
