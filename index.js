@@ -54,6 +54,7 @@ app.post('/webhook', async function(req, res) { // Phần sử lý tin nhắn c�
 				}
 			}
 		}
+		sendMessage(senderId, "đây");
         if (typeof text === 'string' || text instanceof String) {
 
 		let responses = await sessionClient.detectIntent(request)	
