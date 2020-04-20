@@ -45,6 +45,7 @@ app.post('/webhook', async function(req, res) { // Phần sử lý tin nhắn c�
       var senderId = message.sender.id;
       if (message.message) {
         var text = message.message.text;
+        sendMessage(senderId, typeof text);
         const request = {
 			session: sessionPath,
 			queryInput: {
