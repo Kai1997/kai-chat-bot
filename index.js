@@ -89,14 +89,15 @@ async function resFromDialog(senderId, text) {
     }
   }
   if (typeof text === 'string' || text instanceof String) {
-    if (text =='hôm nay' || text =='hom nay') {
+    let responses = await sessionClient.detectIntent(request)
+    let mss = responses[0].queryResult.fulfillmentMessages[0].text.text[0];
+    if (text == 'hôm nay' || text == 'hom nay') {
       sendMessage(senderId, getToday());
     } else {
-      let responses = await sessionClient.detectIntent(request)
-    let mss = responses[0].queryResult.fulfillmentMessages[0].text.text[0];
-    sendMessage(senderId, mss);
+
+      sendMessage(senderId, mss);
     }
-    
+
   } else {
     sendMessage(senderId, "oh no, quá khả năng của mình rồi.");
   }
@@ -167,25 +168,25 @@ function getToday() {
   // Lấy tên thứ của ngày hiện tại
   switch (current_day) {
     case 0:
-        day_name = "Chủ nhật";
-        break;
+      day_name = "Chủ nhật";
+      break;
     case 1:
-        day_name = "Thứ hai";
-        break;
+      day_name = "Thứ hai";
+      break;
     case 2:
-        day_name = "Thứ ba";
-        break;
+      day_name = "Thứ ba";
+      break;
     case 3:
-        day_name = "Thứ tư";
-        break;
+      day_name = "Thứ tư";
+      break;
     case 4:
-        day_name = "Thứ năm";
-        break;
+      day_name = "Thứ năm";
+      break;
     case 5:
-        day_name = "Thứ sau";
-        break;
+      day_name = "Thứ sau";
+      break;
     case 6:
-        day_name = "Thứ bảy";
-    }
+      day_name = "Thứ bảy";
+  }
   return day_name;
 }
