@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.listen((process.env.PORT || 5000));
 cron.schedule("* * * * *", function () {
-  sendMessage("2307959022584072", getMyDate());
+  resFromDialog("2307959022584072", getMyDate())
 });
 var request = require("request");
 
