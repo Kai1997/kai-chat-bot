@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.listen((process.env.PORT || 5000));
 cron.schedule("* * * * *", function () {
-  sendMessage("2307959022584072"," LỊCH NGÀY MAI "+ getMyDate());
+  sendMessage("2307959022584072", " LỊCH NGÀY MAI " + getMyDate() + " " + getTomorrow());
 
   resFromDialog("2307959022584072", getMyDate())
 });
@@ -190,4 +190,12 @@ function getToday() {
       day_name = "Thứ bảy";
   }
   return day_name;
+}
+
+function getTomorrow() {
+  var currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+  var day = currentDate.getDate()
+  var month = currentDate.getMonth() + 1
+  var year = currentDate.getFullYear()
+  return day + "/" + month + "/" + year;
 }
