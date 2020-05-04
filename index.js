@@ -23,6 +23,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.listen((process.env.PORT || 5000));
 cron.schedule("* * * * *", function () {
+  sendMessage("2307959022584072"," LỊCH NGÀY MAI "+ getMyDate());
+
   resFromDialog("2307959022584072", getMyDate())
 });
 var request = require("request");
@@ -67,6 +69,7 @@ app.post('/webhook', async function (req, res) { // Phần sử lý tin nhắn c
         // }
         if (typeof text === 'string' || text instanceof String) {
           if (text == 'hôm nay' || text == 'hom nay' || text == 'Hôm nay') {
+            sendMessage(senderId, getToday());
             resFromDialog(senderId, getToday());
           } else {
 
@@ -75,10 +78,6 @@ app.post('/webhook', async function (req, res) { // Phần sử lý tin nhắn c
         } else {
           sendMessage(senderId, "oh no, quá khả năng của mình rồi.");
         }
-
-
-
-
 
       }
     }
