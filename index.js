@@ -67,7 +67,7 @@ app.post('/webhook', async function (req, res) { // Phần sử lý tin nhắn c
         // }
         if (typeof text === 'string' || text instanceof String) {
           if (text == 'hôm nay' || text == 'hom nay' || text == 'Hôm nay') {
-            sendMessage(senderId, getToday());
+            resFromDialog(senderId, getToday());
           } else {
 
             resFromDialog(senderId, text)
