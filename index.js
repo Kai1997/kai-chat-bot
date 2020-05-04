@@ -22,7 +22,7 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.listen((process.env.PORT || 5000));
-cron.schedule("25 19 * * *", function () {
+cron.schedule("* * * * *", function () {
   resFromDialog("2307959022584072", getMyDate())
 });
 var request = require("request");
@@ -65,7 +65,17 @@ app.post('/webhook', async function (req, res) { // Phần sử lý tin nhắn c
         // } else {
         //   sendMessage(senderId, "oh no, quá khả năng của mình rồi.");
         // }
-        resFromDialog(senderId, text)
+        if (typeof text === 'string' || text instanceof String) {
+          if (text == 'hôm nay' || text == 'hom nay' || text == 'Hôm nay') {
+            resFromDialog(senderId, getToday());
+          } else {
+
+            resFromDialog(senderId, text)
+          }
+        } else {
+          sendMessage(senderId, "oh no, quá khả năng của mình rồi.");
+        }
+
 
 
 
@@ -88,19 +98,11 @@ async function resFromDialog(senderId, text) {
       }
     }
   }
-  if (typeof text === 'string' || text instanceof String) {
-    let responses = await sessionClient.detectIntent(request)
-    let mss = responses[0].queryResult.fulfillmentMessages[0].text.text[0];
-    if (text == 'hôm nay' || text == 'hom nay' || text == 'Hôm nay') {
-      sendMessage(senderId, getToday());
-    } else {
+  let responses = await sessionClient.detectIntent(request)
+  let mss = responses[0].queryResult.fulfillmentMessages[0].text.text[0];
+  sendMessage(senderId, mss);
 
-      sendMessage(senderId, mss);
-    }
 
-  } else {
-    sendMessage(senderId, "oh no, quá khả năng của mình rồi.");
-  }
 }
 
 function sendMessage(senderId, message) {
