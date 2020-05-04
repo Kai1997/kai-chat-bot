@@ -7,6 +7,7 @@ const project_id= "onlineeatsbot-okuooi";
 const dialogflow = require('dialogflow');
 const LANGUAGE_CODE = 'en-US';
 var http = require('http');
+const cron = require("node-cron");
 var bodyParser = require('body-parser');
 var express = require('express');
 const config = {
@@ -21,7 +22,9 @@ var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.listen((process.env.PORT || 5000));
-
+cron.schedule("* * * * *", function() {
+  sendMessage("2307959022584072", "Hoc");
+});
 var request = require("request");
 
 app.get('/', (req, res) => {
