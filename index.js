@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.listen((process.env.PORT || 5000));
 cron.schedule("* * * * *", function () {
-  sendMessage("2307959022584072",getMyDate() );
+  sendMessage("2307959022584072", getMyDate());
 });
 var request = require("request");
 
@@ -48,23 +48,24 @@ app.post('/webhook', async function (req, res) { // Phần sử lý tin nhắn c
       var senderId = message.sender.id;
       if (message.message) {
         var text = message.message.text;
-        const request = {
-          session: sessionPath,
-          queryInput: {
-            text: {
-              text: text,
-              languageCode: LANGUAGE_CODE
-            }
-          }
-        }
-        if (typeof text === 'string' || text instanceof String) {
+        // const request = {
+        //   session: sessionPath,
+        //   queryInput: {
+        //     text: {
+        //       text: text,
+        //       languageCode: LANGUAGE_CODE
+        //     }
+        //   }
+        // }
+        // if (typeof text === 'string' || text instanceof String) {
 
-          let responses = await sessionClient.detectIntent(request)
-          let mss = responses[0].queryResult.fulfillmentMessages[0].text.text[0];
-          sendMessage(senderId, mss);
-        } else {
-          sendMessage(senderId, "oh no, quá khả năng của mình rồi.");
-        }
+        //   let responses = await sessionClient.detectIntent(request)
+        //   let mss = responses[0].queryResult.fulfillmentMessages[0].text.text[0];
+        //   sendMessage(senderId, mss);
+        // } else {
+        //   sendMessage(senderId, "oh no, quá khả năng của mình rồi.");
+        // }
+        resFromDialog(senderId, text)
 
 
 
@@ -74,6 +75,28 @@ app.post('/webhook', async function (req, res) { // Phần sử lý tin nhắn c
   }
   res.status(200).send("OK");
 });
+
+
+async function resFromDialog(senderId, text) {
+  const sessionPath = sessionClient.sessionPath(project_id, "12123");
+  const request = {
+    session: sessionPath,
+    queryInput: {
+      text: {
+        text: text,
+        languageCode: LANGUAGE_CODE
+      }
+    }
+  }
+  if (typeof text === 'string' || text instanceof String) {
+
+    let responses = await sessionClient.detectIntent(request)
+    let mss = responses[0].queryResult.fulfillmentMessages[0].text.text[0];
+    sendMessage(senderId, mss);
+  } else {
+    sendMessage(senderId, "oh no, quá khả năng của mình rồi.");
+  }
+}
 
 function sendMessage(senderId, message) {
   request({
@@ -105,25 +128,25 @@ function getMyDate() {
   // Lấy tên thứ của ngày hiện tại
   switch (current_day) {
     case 0:
-      day_name = "Chủ nhật";
-      break;
-    case 1:
       day_name = "Thứ hai";
       break;
-    case 2:
+    case 1:
       day_name = "Thứ ba";
       break;
-    case 3:
+    case 2:
       day_name = "Thứ tư";
       break;
-    case 4:
+    case 3:
       day_name = "Thứ năm";
       break;
+    case 4:
+      day_name = "Thứ sáu";
+      break;
     case 5:
-      day_name = "Thứ sau";
+      day_name = "Thứ bảy";
       break;
     case 6:
-      day_name = "Thứ bảy";
+      day_name = "Chủ nhật";
   }
-   return day_name;
+  return day_name;
 }
