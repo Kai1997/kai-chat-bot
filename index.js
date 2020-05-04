@@ -91,7 +91,7 @@ async function resFromDialog(senderId, text) {
   if (typeof text === 'string' || text instanceof String) {
     let responses = await sessionClient.detectIntent(request)
     let mss = responses[0].queryResult.fulfillmentMessages[0].text.text[0];
-    if (text == 'hôm nay' || text == 'hom nay') {
+    if (text == 'hôm nay' || text == 'hom nay' || text == 'Hôm nay') {
       sendMessage(senderId, getToday());
     } else {
 
