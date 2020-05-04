@@ -22,7 +22,7 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.listen((process.env.PORT || 5000));
-cron.schedule("15 19 * * *", function () {
+cron.schedule("25 19 * * *", function () {
   resFromDialog("2307959022584072", getMyDate())
 });
 var request = require("request");
@@ -89,10 +89,14 @@ async function resFromDialog(senderId, text) {
     }
   }
   if (typeof text === 'string' || text instanceof String) {
-
-    let responses = await sessionClient.detectIntent(request)
+    if (text =='hôm nay' || text =='hom nay') {
+      sendMessage(senderId, getToday());
+    } else {
+      let responses = await sessionClient.detectIntent(request)
     let mss = responses[0].queryResult.fulfillmentMessages[0].text.text[0];
     sendMessage(senderId, mss);
+    }
+    
   } else {
     sendMessage(senderId, "oh no, quá khả năng của mình rồi.");
   }
@@ -148,5 +152,40 @@ function getMyDate() {
     case 6:
       day_name = "Chủ nhật";
   }
+  return day_name;
+}
+function getToday() {
+  // Khai báo đối tượng Date
+  var date = new Date();
+
+  // Lấy số thứ tự của ngày hiện tại
+  var current_day = date.getDay();
+
+  // Biến lưu tên của thứ
+  var day_name = '';
+
+  // Lấy tên thứ của ngày hiện tại
+  switch (current_day) {
+    case 0:
+        day_name = "Chủ nhật";
+        break;
+    case 1:
+        day_name = "Thứ hai";
+        break;
+    case 2:
+        day_name = "Thứ ba";
+        break;
+    case 3:
+        day_name = "Thứ tư";
+        break;
+    case 4:
+        day_name = "Thứ năm";
+        break;
+    case 5:
+        day_name = "Thứ sau";
+        break;
+    case 6:
+        day_name = "Thứ bảy";
+    }
   return day_name;
 }
