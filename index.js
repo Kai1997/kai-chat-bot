@@ -106,7 +106,7 @@ async function resFromDialog(senderId, text) {
   }
   let responses = await sessionClient.detectIntent(request)
   let mss = responses[0].queryResult.fulfillmentMessages[0].text.text[0];
-  sendMessage(senderId, mss);
+  await sendMessage(senderId, mss);
   sendQuickReply(senderId, text);
 
 
