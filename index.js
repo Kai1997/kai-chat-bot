@@ -74,15 +74,15 @@ app.post('/webhook', async function (req, res) { // Phần sử lý tin nhắn c
         // }
         if (typeof text === 'string' || text instanceof String) {
           if (text == 'hôm nay' || text == 'hom nay' || text == 'Hôm nay') {
-            sendMessage(senderId, getToday());
-            resFromDialog(senderId, getToday());
+            await sendMessage(senderId, getToday());
+            await resFromDialog(senderId, getToday());
           } else {
 
             await resFromDialog(senderId, text)
           }
         } else {
-          sendMessage(senderId, "oh no, quá khả năng của mình rồi.");
-          sendQuickReply(senderId, text);
+          await sendMessage(senderId, "oh no, quá khả năng của mình rồi.");
+          await sendQuickReply(senderId, text);
 
         }
 
@@ -107,7 +107,7 @@ async function resFromDialog(senderId, text) {
   let responses = await sessionClient.detectIntent(request)
   let mss = responses[0].queryResult.fulfillmentMessages[0].text.text[0];
   await sendMessage(senderId, mss);
-  sendQuickReply(senderId, text);
+  await sendQuickReply(senderId, text);
 
 
 }
