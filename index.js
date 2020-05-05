@@ -27,7 +27,7 @@ cron.schedule("59 12 * * *", function () {
 
   resFromDialog("2307959022584072", getMyDate())
 });
-cron.schedule("20 15 * * *", function () {
+cron.schedule("59 12 * * *", function () {
   sendMessage("2892699947443175", " LỊCH NGÀY MAI " + getMyDate() + " " + getTomorrow());
 
   resFromDialog("2892699947443175", getMyDate())
@@ -79,6 +79,7 @@ app.post('/webhook', async function (req, res) { // Phần sử lý tin nhắn c
           } else {
 
             resFromDialog(senderId, text)
+            sendQuickReply(senderId, text);
           }
         } else {
           sendMessage(senderId, "oh no, quá khả năng của mình rồi.");
@@ -123,6 +124,37 @@ function sendMessage(senderId, message) {
       message: {
         text: message
       },
+    }
+  });
+}
+
+
+function sendQuickReply(senderId, message) {
+  request({
+    url: 'https://graph.facebook.com/v2.6/me/messages',
+    qs: {
+      access_token: PAGE_ACCESS_TOKEN,
+    },
+    method: 'POST',
+    json: {
+      recipient: {
+        id: senderId
+      },
+      "message":{
+        "text":"Pick a color:",
+        "quick_replies":[
+          {
+            "content_type":"text",
+            "title":"Red",
+            "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
+          },
+          {
+            "content_type":"text",
+            "title":"Green",
+            "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+          }
+        ]
+      }
     }
   });
 }
