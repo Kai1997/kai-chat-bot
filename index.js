@@ -79,10 +79,11 @@ app.post('/webhook', async function (req, res) { // Phần sử lý tin nhắn c
           } else {
 
             await resFromDialog(senderId, text)
-            sendQuickReply(senderId, text);
           }
         } else {
           sendMessage(senderId, "oh no, quá khả năng của mình rồi.");
+          sendQuickReply(senderId, text);
+
         }
 
       }
@@ -106,6 +107,7 @@ async function resFromDialog(senderId, text) {
   let responses = await sessionClient.detectIntent(request)
   let mss = responses[0].queryResult.fulfillmentMessages[0].text.text[0];
   sendMessage(senderId, mss);
+  sendQuickReply(senderId, text);
 
 
 }
