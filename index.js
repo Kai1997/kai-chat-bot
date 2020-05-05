@@ -81,7 +81,7 @@ app.post('/webhook', async function (req, res) { // Phần sử lý tin nhắn c
             await resFromDialog(senderId, text)
           }
         } else {
-          sendMessage(senderId, "oh no, quá khả năng của mình rồi.");
+          // sendMessage(senderId, "oh no, quá khả năng của mình rồi.");
           sendQuickReply(senderId, text);
 
         }
