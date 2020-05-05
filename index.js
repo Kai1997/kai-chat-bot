@@ -76,9 +76,9 @@ app.post('/webhook', async function (req, res) { // Phần sử lý tin nhắn c
           if (text == 'hôm nay' || text == 'hom nay' || text == 'Hôm nay') {
             await sendMessage(senderId, getToday());
             await resFromDialog(senderId, getToday());
-          } else if (text == 'Xem lịch' || text == 'xem lịch' || text == 'lịch học') {
+          } else if (text == 'Xem lịch' || text == 'xem lịch' || text == 'lịch học'|| text == 'lịch'|| text == 'Lịch') {
             await sendQuickReply(senderId, text);
-          } else if (text == 'Ngày mai' || text == 'ngày mai' || text == '') {
+          } else if (text == 'Ngày mai' || text == 'ngày mai' || text == 'Mai') {
             await sendMessage(senderId, " LỊCH NGÀY MAI " + getMyDate() + " " + getTomorrow());
 
           } else {
