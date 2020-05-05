@@ -78,7 +78,7 @@ app.post('/webhook', async function (req, res) { // Phần sử lý tin nhắn c
             resFromDialog(senderId, getToday());
           } else {
 
-            resFromDialog(senderId, text)
+            await resFromDialog(senderId, text)
             sendQuickReply(senderId, text);
           }
         } else {
