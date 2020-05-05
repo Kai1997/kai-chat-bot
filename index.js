@@ -26,9 +26,6 @@ cron.schedule("20 11 * * *", function () {
   sendMessage("2307959022584072", " LỊCH NGÀY MAI " + getMyDate() + " " + getTomorrow());
 
   resFromDialog("2307959022584072", getMyDate())
-}, {
-  scheduled: true,
-  timezone: "Asia/Ho_Chi_Minh"
 });
 var request = require("request");
 
