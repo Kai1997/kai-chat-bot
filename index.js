@@ -131,7 +131,7 @@ function sendMessage(senderId, message) {
 
 function sendQuickReply(senderId, message) {
   request({
-    url: 'https://graph.facebook.com/v2.6/me/messages',
+    url: 'https://graph.facebook.com/v6.0/me/messages',
     qs: {
       access_token: PAGE_ACCESS_TOKEN,
     },
@@ -140,6 +140,7 @@ function sendQuickReply(senderId, message) {
       recipient: {
         id: senderId
       },
+      messaging_type: "RESPONSE",
       message:{
         text:"Pick a color:",
         quick_replies:[
