@@ -81,7 +81,7 @@ app.post('/webhook', async function (req, res) { // Phần sử lý tin nhắn c
             await resFromDialog(senderId, text)
           }
         } else {
-          // sendMessage(senderId, "oh no, quá khả năng của mình rồi.");
+          sendMessage(senderId, "oh no, quá khả năng của mình rồi.");
           sendQuickReply(senderId, text);
 
         }
@@ -144,16 +144,46 @@ function sendQuickReply(senderId, message) {
       },
       messaging_type: "RESPONSE",
       message:{
-        text:"Pick a color:",
+        text:"Xem lịch",
         quick_replies:[
           {
             content_type:"text",
-            title:"Red",
+            title:"Hôm nay",
             payload:"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
           },
           {
             content_type:"text",
-            title:"Green",
+            title:"Thứ 2",
+            payload:"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+          },
+          {
+            content_type:"text",
+            title:"Thứ 3",
+            payload:"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+          },
+          {
+            content_type:"text",
+            title:"Thứ 4",
+            payload:"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+          },
+          {
+            content_type:"text",
+            title:"Thứ 5",
+            payload:"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+          },
+          {
+            content_type:"text",
+            title:"Thứ 6",
+            payload:"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+          },
+          {
+            content_type:"text",
+            title:"Thứ 7",
+            payload:"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+          },
+          {
+            content_type:"text",
+            title:"Chủ nhật",
             payload:"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
           }
         ]
