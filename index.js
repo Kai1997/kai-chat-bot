@@ -128,7 +128,6 @@ function sendMessage(senderId, message) {
       recipient: {
         id: senderId
       },
-      sender_action:"typing_on",
       message: {
         text: message
       },
