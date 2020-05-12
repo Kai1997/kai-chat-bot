@@ -22,12 +22,12 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.listen((process.env.PORT || 5000));
-cron.schedule("59 11 * * *", function () {
+cron.schedule("00 59 10 * * *", function () {
   sendMessage("2307959022584072", " LỊCH NGÀY MAI " + getMyDate() + " " + getTomorrow());
 
-  resFromDialog("2307959022584072", getMyDate())
+  resFromDialog("00 2307959022584072", getMyDate())
 });
-cron.schedule("59 11 * * *", function () {
+cron.schedule("59 10 * * *", function () {
   sendMessage("2892699947443175", " LỊCH NGÀY MAI " + getMyDate() + " " + getTomorrow());
 
   resFromDialog("2892699947443175", getMyDate())
