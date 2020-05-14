@@ -8,6 +8,8 @@ const dialogflow = require('dialogflow');
 const LANGUAGE_CODE = 'en-US';
 var http = require('http');
 const cron = require("node-cron");
+const CronJob = require('cron').CronJob
+const times = ['00 59 21 * * *']
 var bodyParser = require('body-parser');
 var express = require('express');
 const config = {
@@ -32,6 +34,39 @@ cron.schedule("59 10 * * *", function () {
 
   resFromDialog("2892699947443175", getMyDate())
 });
+const stopJob = (job) => job.stop()
+const startJob = (job) => job.start()
+const myCron = () => {
+  const times = ['00 59 23 * * *']
+  const jobs = times.map(cronTime => {
+      return new CronJob({
+          cronTime,
+          onTick: async () => {
+              try {
+                sendMessage("2307959022584072", " LỊCH NGÀY MAI " + getMyDate() + " " + getTomorrow());
+
+                resFromDialog("00 2307959022584072", getMyDate())
+                sendMessage("2892699947443175", " LỊCH NGÀY MAI " + getMyDate() + " " + getTomorrow());
+
+                resFromDialog("2892699947443175", getMyDate())
+              } catch (er) {
+              }
+          },
+          start: true
+          // timeZone: 'Asia/Ho_Chi_Minh'
+      })
+  })
+
+  return {
+      start: () => {
+          jobs.forEach(startJob)
+      },
+      stop: () => {
+          jobs.forEach(stopJob)
+      }
+  }
+}
+myCron();
 var request = require("request");
 
 app.get('/', (req, res) => {
