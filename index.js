@@ -22,7 +22,7 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.listen((process.env.PORT || 5000));
-cron.schedule("00 59 10 * * *", function () {
+cron.schedule("59 10 * * *", function () {
   sendMessage("2307959022584072", " LỊCH NGÀY MAI " + getMyDate() + " " + getTomorrow());
 
   resFromDialog("00 2307959022584072", getMyDate())
@@ -74,19 +74,18 @@ app.post('/webhook', async function (req, res) { // Phần sử lý tin nhắn c
         // }
         if (typeof text === 'string' || text instanceof String) {
           if (text == 'hôm nay' || text == 'hom nay' || text == 'Hôm nay') {
-            await sendMessage(senderId, getToday());
-            await resFromDialog(senderId, getToday());
+             resFromDialog(senderId, getToday());
           } else if (text == 'Xem lịch' || text == 'xem lịch' || text == 'lịch học'|| text == 'Lịch học'|| text == 'lịch'|| text == 'Lịch') {
-            await sendQuickReply(senderId, text);
+             sendQuickReply(senderId, text);
           } else if (text == 'Ngày mai' || text == 'ngày mai' || text == 'Mai') {
-            await sendMessage(senderId, " LỊCH NGÀY MAI " + getMyDate() + " " + getTomorrow());
+             sendQuickReply(senderId, " LỊCH NGÀY MAI " + getMyDate() + " " + getTomorrow());
 
           } else {
 
-            await resFromDialog(senderId, text)
+             resFromDialog(senderId, text)
           }
         } else {
-          await sendMessage(senderId, "oh no, quá khả năng của mình rồi.");
+           sendQuickReply(senderId, "oh no, quá khả năng của mình rồi.");
           // await sendQuickReply(senderId, text);
 
         }
@@ -111,7 +110,7 @@ async function resFromDialog(senderId, text) {
   }
   let responses = await sessionClient.detectIntent(request)
   let mss = responses[0].queryResult.fulfillmentMessages[0].text.text[0];
-  await sendMessage(senderId, mss);
+  sendQuickReply(senderId, mss);
   // await sendQuickReply(senderId, text);
 
 
@@ -149,7 +148,7 @@ function sendQuickReply(senderId, message) {
       },
       messaging_type: "RESPONSE",
       message:{
-        text:"Xem lịch",
+        text:message,
         quick_replies:[
           {
             content_type:"text",
