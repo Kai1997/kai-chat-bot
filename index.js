@@ -26,7 +26,7 @@ app.listen((process.env.PORT || 5000));
 
 sendMessage("2307959022584072", " LỊCH NGÀY MAI " + getMyDate() + " " + getTomorrow());
 sendMessage("2892699947443175", " LỊCH NGÀY MAI " + getMyDate() + " " + getTomorrow());
-resFromDialog("00 2307959022584072", getMyDate())
+resFromDialog("2307959022584072", getMyDate())
 resFromDialog("2892699947443175", getMyDate())
 
 
