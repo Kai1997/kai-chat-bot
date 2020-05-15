@@ -7,9 +7,10 @@ const project_id = "onlineeatsbot-okuooi";
 const dialogflow = require('dialogflow');
 const LANGUAGE_CODE = 'en-US';
 var http = require('http');
-const times = ['00 59 21 * * *']
 var bodyParser = require('body-parser');
 var express = require('express');
+var request = require("request");
+
 const config = {
   credentials: {
     private_key: private_key,
@@ -24,13 +25,12 @@ app.use(bodyParser.json());
 app.listen((process.env.PORT || 5000));
 
 sendMessage("2307959022584072", " LỊCH NGÀY MAI " + getMyDate() + " " + getTomorrow());
-  sendMessage("2892699947443175", " LỊCH NGÀY MAI " + getMyDate() + " " + getTomorrow());
-  resFromDialog("00 2307959022584072", getMyDate())
-  resFromDialog("2892699947443175", getMyDate())
+sendMessage("2892699947443175", " LỊCH NGÀY MAI " + getMyDate() + " " + getTomorrow());
+resFromDialog("00 2307959022584072", getMyDate())
+resFromDialog("2892699947443175", getMyDate())
 
 
 
-var request = require("request");
 
 app.get('/', (req, res) => {
   res.send("Home page. Server running okay.");
